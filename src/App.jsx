@@ -3,9 +3,10 @@ import './App.css';
 import {Route, Routes} from "react-router-dom";
 import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
-import { Cart } from './pages/Cart';
+import Cart from './pages/Cart';  // No curly braces
 
-function App() {
+
+const App = () => {
   return (
    <div>
     <div>
