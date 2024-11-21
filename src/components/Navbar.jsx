@@ -7,7 +7,7 @@ export const Navbar = () => {
         <div className="flex flex-row justify-between">
             <NavLink to="/">
                 <div>
-                <img src="https://media.istockphoto.com/id/1320617333/photo/shopping-cart-full-of-food-isolated-on-white-grocery-and-food-store-concept.jpg?s=612x612&w=0&k=20&c=e4O0Gvp-CVd6JGPTg4kh_2REP5GXJRpk7Tvdh_uaGJ0=" />
+                <img  width={50}  height={50} src="https://media.istockphoto.com/id/1320617333/photo/shopping-cart-full-of-food-isolated-on-white-grocery-and-food-store-concept.jpg?s=612x612&w=0&k=20&c=e4O0Gvp-CVd6JGPTg4kh_2REP5GXJRpk7Tvdh_uaGJ0=" />
                 </div>
             </NavLink>
             <div>

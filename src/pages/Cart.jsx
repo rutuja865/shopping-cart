@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import CartItem from "../components/CartItem";
  const Cart = () => {
   const {cart} =useSelector((state)=>state);
-  const {totalAmount,setTotalAmount}=useState(0);
+  const [totalAmount,setTotalAmount]=useState(0);
 
   useEffect(() => {
     setTotalAmount(cart.reduce((accu, curr) => accu + curr.price, 0));
