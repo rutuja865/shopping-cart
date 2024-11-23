@@ -9,7 +9,7 @@ import Cart from './pages/Cart';  // No curly braces
 const App = () => {
   return (
    <div>
-    <div>
+    <div className="bg-slate-900">
       <Navbar/>
     </div>
     <Routes>

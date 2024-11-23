@@ -1,30 +1,44 @@
-import React from 'react'
-import {FaShoppingCart} from "react-icons/fa";
-import { NavLink } from 'react-router-dom';
+import {FaShoppingCart} from "react-icons/fa"
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { FaShoppingBag } from "react-icons/fa";
 export const Navbar = () => {
+
+  const {cart} = useSelector((state) => state);
+
   return (
-    <div className='bg-blue-500'>
-        <div className="flex flex-row justify-between">
+    <div >
+      <nav className="flex justify-between items-center h-20 max-w-6xl mx-auto">
+
+        <NavLink to="/">
+          <div className="ml-5 text-slate-100 text-2xl flex justify-between items-center gap-2">
+            <FaShoppingBag/>
+            <p>Shoppybuddy</p>
+          {/* <img src="../logo.png" className="h-14"/> */}
+          </div>
+        </NavLink>
+
+          <div className="flex items-center font-medium text-slate-100 mr-5 space-x-6">
             <NavLink to="/">
-                <div>
-                <img  width={50}  height={50} src="https://media.istockphoto.com/id/1320617333/photo/shopping-cart-full-of-food-isolated-on-white-grocery-and-food-store-concept.jpg?s=612x612&w=0&k=20&c=e4O0Gvp-CVd6JGPTg4kh_2REP5GXJRpk7Tvdh_uaGJ0=" />
-                </div>
+              <p>Home</p>
             </NavLink>
-            <div>
-                <NavLink to="/">
-                <p>Home</p>
-                </NavLink>
-         <NavLink to="/cart">
-            <div>
-            <FaShoppingCart/>
-            </div>
-       
-         </NavLink>
-       
-            </div>
-           
-        </div>
-        
+
+            <NavLink to="/cart">
+              <div className="relative">
+                  <FaShoppingCart className="text-2xl"/>
+                  {
+                    cart.length > 0 &&
+                    <span
+                    className="absolute -top-1 -right-2 bg-green-600 text-xs w-5 h-5 flex 
+                    justify-center items-center animate-bounce rounded-full text-white" 
+                    >{cart.length}</span>
+                  }
+                  
+              </div>
+            </NavLink>
+            
+          </div>
+      </nav>
     </div>
   )
-}
+};
