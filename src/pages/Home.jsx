@@ -28,7 +28,11 @@ export const Home = () => {
   },[])
 
   return (
-    <div>
+    <>
+    <div className="header-banner-container">
+      <img src="src/assets/images/images.jpg" alt="" />
+    </div>
+       <div>
       {
         loading ? <Spinner />  :
         posts.length > 0 ? 
@@ -44,5 +48,7 @@ export const Home = () => {
         </div> 
       }
     </div>
+    </>
+ 
   );
 };
