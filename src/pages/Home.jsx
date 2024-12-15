@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import {Spinner} from "../components/Spinner";
 import {Product} from "../components/Product";
+import { PromoPage } from "./PromoPage";
+import { BannerCorousal } from "./BannerCorousal";
+
+import image2 from '../assets/images/poster.webp'
 
 export const Home = () => {
   const API_URL = "https://fakestoreapi.com/products";
@@ -29,14 +33,31 @@ export const Home = () => {
 
   return (
     <>
-    <div className="header-banner-container">
-      <img src="src/assets/images/images.jpg" alt="" />
-    </div>
+ <div className="pt-4 header-banner-container flex justify-center w-full h-screen">
+  <img 
+    src={image2} 
+    alt="Banner" 
+    className=""
+  />
+</div>
+
+
+    <header className="bg-white shadow">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            {/* <h1 className="text-3xl font-bold tracking-tight text-gray-900"></h1> */}
+            <PromoPage/>
+          </div>
+        </header>
+        <main>
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <BannerCorousal/>
+          </div>
+        </main>
        <div>
       {
         loading ? <Spinner />  :
         posts.length > 0 ? 
-        (<div className="grid  xs:gridcols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-6xl p-2 mx-auto space-y-10 space-x-5 min-h-[80vh]">
+        (<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-4 py-6">
           {
             posts.map( (post) => (
             <Product key = {post.id} post={post}/>
