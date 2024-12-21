@@ -1,6 +1,5 @@
-
 import './App.css';
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
 import Cart from './pages/Cart';  // No curly braces
@@ -8,24 +7,35 @@ import { Login } from './components/dashboard/profile/Login';
 import { Registration } from './components/dashboard/profile/Registration';
 import { ForgotPassword } from './components/dashboard/profile/ForgotPassword';
 import { BannerCorousal } from './pages/BannerCorousal';
-
+import { ProductDetails } from './components/ProductDetails';
+import Footer from './components/Footer'; // Import Footer
 
 const App = () => {
+  const location = useLocation(); // Get current location
+
+  // Check if the current route is Login, Registration, or Forgot Password
+  const noFooterPaths = ["/login", "/registration", "/forgotPassword"];
+
+  // Footer should not be shown on the above pages
+  const showFooter = !noFooterPaths.includes(location.pathname);
+
   return (
-   <div>
-      <Navbar/>
-    <div className="pt-16">
-    <Routes>
-<Route path="/" element={<Home/>} />
-<Route path="/cart" element={<Cart/>} />
-<Route path="/login" element={<Login/>} />
-<Route path="/registration" element={<Registration/>} />
-<Route path="/forgotPassword" element={<ForgotPassword/>} />
-<Route path="/bannerCarousal" element={<BannerCorousal/>} />
-    </Routes>
+    <div>
+      <Navbar />
+      <div className="pt-16">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/bannerCarousal" element={<BannerCorousal />} />
+        </Routes>
+      </div>
+      {showFooter && <Footer />} {/* Conditionally render Footer */}
     </div>
-   </div>
   );
-}
+};
 
 export default App;
