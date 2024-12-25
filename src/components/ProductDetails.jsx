@@ -17,7 +17,7 @@ export const ProductDetails = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state);
   const navigate = useNavigate(); // useNavigate for React Router v6
-
+console.log("cart",cart);
   const API_URL = `https://fakestoreapi.com/products/${id}`;
 
   // Fetch product details
@@ -53,16 +53,27 @@ export const ProductDetails = () => {
 
     fetchProductDetails();
   }, [id]);
-
   const addToCart = () => {
+    // Create a new product object with the specified quantity
     const productWithQuantity = { ...product, quantity };
-    // Add the product along with its quantity to the cart
-    for (let i = 0; i < quantity; i++) {
-      dispatch(add(productWithQuantity));
-    }
+  
+    // Add the product with its quantity to the cart
+    dispatch(add(productWithQuantity));
+    console.log("Added to cart:", productWithQuantity);
     toast.success(`${quantity} item(s) added to Cart`);
     setAddedToCart(true);
   };
+  
+  // const addToCart = () => {
+  //   const productWithQuantity = { ...product, quantity };
+  //   console.log("productWithQuantity",productWithQuantity);
+  //   // Add the product along with its quantity to the cart
+  //   for (let i = 0; i < quantity; i++) {
+  //     dispatch(add(productWithQuantity));
+  //   }
+  //   toast.success(`${quantity} item(s) added to Cart`);
+  //   setAddedToCart(true);
+  // };
 
   if (loading) {
     return <Spinner />;

@@ -7,10 +7,32 @@ import CartItem from "../components/CartItem";
 const Cart = () => {
   const { cart } = useSelector((state) => state);
   const [totalAmount, setTotalAmount] = useState(0);
-
+  const [groupedCart, setGroupedCart] = useState([]);
+  console.log("cccc",cart);
+  const USD_TO_INR = 82;
   useEffect(() => {
     setTotalAmount(cart.reduce((acc, curr) => acc + curr.price, 0));
   }, [cart]);
+
+  useEffect(() => {
+    const groupedCart = cart.reduce((acc, item) => {
+      if (acc[item.id]) {
+        // If the item already exists, sum the quantities
+        acc[item.id].quantity += item.quantity;
+      } else {
+        // If it's a new item, add it to the accumulator
+        acc[item.id] = { ...item };
+      }
+      return acc;
+    }, {});
+
+    // Convert the groupedCart object into an array of unique items
+    const uniqueCartItems = Object.values(groupedCart);
+    
+    // Set the groupedCart state
+    setGroupedCart(uniqueCartItems);
+  }, [cart]);
+  const totalAmountInINR = (totalAmount * USD_TO_INR).toLocaleString("en-IN");
   return (
     <div>
   {
@@ -20,8 +42,8 @@ const Cart = () => {
 
       <div className="lg:w-[70%]">
         {
-          cart.map( (item,index) => {
-            return <CartItem key={item.id} item={item} itemIndex={index} />
+          groupedCart.map( (item) => {
+            return <CartItem key={item.id} item={item} />
           } )
         }
       </div>
@@ -34,17 +56,16 @@ const Cart = () => {
           <p className="font-[600] text-xl text-slate-700">
             Total Items: <span className="font-normal">{cart.length}</span>
           </p>
-        </div>
-
-        <div className="mb-20">
           <p className="text-slate-700 text-xl font-[600] mb-5 ">Total Amount: 
-            <span className="font-bold ml-2 text-black">${totalAmount.toFixed(2)}</span>
+            <span className="font-bold ml-2 text-black">₹{totalAmountInINR}</span>
           </p>
           <button className="text-lg w-full py-2.5 rounded-lg font-bold text-white bg-[#15803d]
           border-2 border-[#15803d] hover:bg-white hover:text-[#15803d] transition-all duration-300 ease-in">
             CheckOut Now
           </button>
         </div>
+
+      
 
       </div>
 

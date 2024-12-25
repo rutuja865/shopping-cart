@@ -3,9 +3,9 @@ import { FcDeleteDatabase } from "react-icons/fc";
 import { useDispatch } from "react-redux";
 import { remove } from "../redux/Slices/CartSlice";
 
-const CartItem = ({item, itemIndex}) => {
+const CartItem = ({item}) => {
   const dispatch = useDispatch();
-
+  const USD_TO_INR = 82; // Conversion rate (example value)
   const removeFromCart = () => {
     dispatch(remove(item.id));
     toast.success("Item removed to Cart");
@@ -25,7 +25,8 @@ const CartItem = ({item, itemIndex}) => {
             {item.description.split(" ").slice(0, 10).join(" ") + "..."}
           </h1>
           <div className="flex justify-between mt-4">
-            <p className="text-green-600 font-semibold">${item.price}</p>
+            <p className="text-green-600 font-semibold">₹{(item.price * USD_TO_INR).toLocaleString("en-IN")}</p>
+            <p className="text-green-600 font-semibold">quantity{item.quantity}</p>
             <div onClick={removeFromCart}>
               <FcDeleteDatabase />
             </div>
