@@ -9,6 +9,7 @@ import { ForgotPassword } from './components/dashboard/profile/ForgotPassword';
 import { BannerCorousal } from './pages/BannerCorousal';
 import { ProductDetails } from './components/ProductDetails';
 import Footer from './components/Footer'; // Import Footer
+import Trial from './components/Trail';
 
 const App = () => {
   const location = useLocation(); // Get current location
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/registration" element={<Registration />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/bannerCarousal" element={<BannerCorousal />} />
+          <Route path='/trial' element={<Trial/>}/>
         </Routes>
       </div>
       {showFooter && <Footer />} {/* Conditionally render Footer */}

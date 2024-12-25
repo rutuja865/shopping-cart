@@ -3,33 +3,31 @@ import {Spinner} from "../components/Spinner";
 import {Product} from "../components/Product";
 import { PromoPage } from "./PromoPage";
 import { BannerCorousal } from "./BannerCorousal";
-
+import axios from 'axios';
 import image2 from '../assets/images/poster.webp'
 
 export const Home = () => {
   const API_URL = "https://fakestoreapi.com/products";
   const [loading, setLoading] = useState(false);
-  const [posts, setPosts] = useState([]);
+  const [products, setProducts] = useState([]);
 
   async function fetchProductData() {
     setLoading(true);
 
-    try{
-      const res = await fetch(API_URL);
-      const data = await res.json();
-
-      setPosts(data);
-    }
-    catch(error) {
-      console.log("Error aagya ji");
-      setPosts([]);
-    }
-    setLoading(false);
+    try {
+      const response = await axios.get(API_URL); // Make API call using axios
+      setProducts(response.data); // Extract and set the data from response
+    } catch (error) {
+      console.log("Error", error.message); 
+      setProducts([]);
+    } 
+      setLoading(false); 
+    
   }
 
-  useEffect( () => {
+  useEffect(() => {
     fetchProductData();
-  },[])
+  }, []);
 
   return (
     <>
@@ -56,11 +54,11 @@ export const Home = () => {
        <div>
       {
         loading ? <Spinner />  :
-        posts.length > 0 ? 
+        products.length > 0 ? 
         (<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-4 py-6">
           {
-            posts.map( (post) => (
-            <Product key = {post.id} post={post}/>
+            products.map( (product) => (
+            <Product key = {product.id} product={product}/>
           ) )
           }
         </div>) :

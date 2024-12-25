@@ -5,7 +5,8 @@ import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../redux/Slices/CartSlice";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for React Router v6
-
+import StarRating from "./global/utility/StarRating";
+import axios from 'axios';
 export const ProductDetails = () => {
   const { id } = useParams(); // Get the product ID from the URL
   const [product, setProduct] = useState(null);
@@ -20,13 +21,29 @@ export const ProductDetails = () => {
   const API_URL = `https://fakestoreapi.com/products/${id}`;
 
   // Fetch product details
+  // useEffect(() => {
+  //   async function fetchProductDetails() {
+  //     setLoading(true);
+  //     try {
+  //       const res = await fetch(API_URL);
+  //       const data = await res.json();
+  //       setProduct(data);
+  //     } catch (error) {
+  //       console.log("Error fetching product details:", error);
+  //       setProduct(null);
+  //     }
+  //     setLoading(false);
+  //   }
+
+  //   fetchProductDetails();
+  // }, [id]);
   useEffect(() => {
     async function fetchProductDetails() {
       setLoading(true);
       try {
-        const res = await fetch(API_URL);
-        const data = await res.json();
-        setProduct(data);
+        const res = await axios.get(API_URL);
+      
+        setProduct(res.data);
       } catch (error) {
         console.log("Error fetching product details:", error);
         setProduct(null);
@@ -64,28 +81,6 @@ export const ProductDetails = () => {
 
   const USD_TO_INR = 82; // Conversion rate (example value)
 
-  // Rating stars calculation
-  const renderStars = (rating) => {
-    const filledStars = Math.floor(rating); // Full stars
-    const hasHalfStar = rating % 1 >= 0.5; // Check for half-star
-    const totalStars = 5; // We are showing 5 stars total
-
-    let stars = [];
-    // Add filled stars
-    for (let i = 0; i < filledStars; i++) {
-      stars.push("★");
-    }
-    // Add half star if applicable
-    if (hasHalfStar) {
-      stars.push("☆");
-    }
-    // Add empty stars
-    for (let i = stars.length; i < totalStars; i++) {
-      stars.push("☆");
-    }
-
-    return stars.join(" "); // Return stars as a string of characters
-  };
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -113,7 +108,8 @@ export const ProductDetails = () => {
             {/* Rating */}
             <div className="mt-4">
               <p className="text-yellow-500 font-semibold text-lg">
-                {renderStars(product.rating.rate)} {/* Display stars */}
+                {/* {renderStars(product.rating.rate)} Display stars */}
+                <StarRating rating={product.rating.rate}/>
               </p>
               <p className="text-gray-600 text-sm">
                 {product.rating.count} reviews
