@@ -3,84 +3,67 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "../components/CartItem";
 
-
 const Cart = () => {
-  const { cart } = useSelector((state) => state);
+  const cart = useSelector((state) => state.cart); // Assuming `cart` is an array in the Redux store
   const [totalAmount, setTotalAmount] = useState(0);
-  const [groupedCart, setGroupedCart] = useState([]);
-  console.log("cccc",cart);
   const USD_TO_INR = 82;
-  useEffect(() => {
-    setTotalAmount(cart.reduce((acc, curr) => acc + curr.price, 0));
-  }, [cart]);
 
   useEffect(() => {
-    const groupedCart = cart.reduce((acc, item) => {
-      if (acc[item.id]) {
-        // If the item already exists, sum the quantities
-        acc[item.id].quantity += item.quantity;
-      } else {
-        // If it's a new item, add it to the accumulator
-        acc[item.id] = { ...item };
-      }
-      return acc;
-    }, {});
-
-    // Convert the groupedCart object into an array of unique items
-    const uniqueCartItems = Object.values(groupedCart);
-    
-    // Set the groupedCart state
-    setGroupedCart(uniqueCartItems);
+    // Calculate the total amount considering the quantity of items
+    const total = cart.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
+    setTotalAmount(total);
   }, [cart]);
+
   const totalAmountInINR = (totalAmount * USD_TO_INR).toLocaleString("en-IN");
+
   return (
     <div>
-  {
-    cart.length > 0  ? 
-    
-    (<div className="flex gap-16 max-w-6xl p-6 mx-auto flex-wrap lg:flex-nowrap">
+      {cart.length > 0 ? (
+        <div className="flex gap-16 max-w-6xl p-6 mx-auto flex-wrap lg:flex-nowrap">
+          {/* Cart Items */}
+          <div className="lg:w-[70%]">
+            {cart.map((item) => (
+              <CartItem key={item.id} item={item} />
+            ))}
+          </div>
 
-      <div className="lg:w-[70%]">
-        {
-          groupedCart.map( (item) => {
-            return <CartItem key={item.id} item={item} />
-          } )
-        }
-      </div>
-
-      <div className="md:w-[30%] w-full flex flex-col gap-8 justify-between">
-
-        <div className="mt-20">
-          <p className="text-xl text-[#166534] uppercase font-[600]">Your Cart</p>
-          <p className="text-5xl font-[600] text-[#15803d] uppercase mb-4">Summary</p>
-          <p className="font-[600] text-xl text-slate-700">
-            Total Items: <span className="font-normal">{cart.length}</span>
-          </p>
-          <p className="text-slate-700 text-xl font-[600] mb-5 ">Total Amount: 
-            <span className="font-bold ml-2 text-black">₹{totalAmountInINR}</span>
-          </p>
-          <button className="text-lg w-full py-2.5 rounded-lg font-bold text-white bg-[#15803d]
-          border-2 border-[#15803d] hover:bg-white hover:text-[#15803d] transition-all duration-300 ease-in">
-            CheckOut Now
-          </button>
+          {/* Cart Summary */}
+          <div className="md:w-[30%] w-full flex flex-col gap-8 justify-between">
+            <div className="mt-20">
+              <p className="text-xl text-[#166534] uppercase font-[600]">Your Cart</p>
+              <p className="text-5xl font-[600] text-[#15803d] uppercase mb-4">Summary</p>
+              <p className="font-[600] text-xl text-slate-700">
+                Total Items:{" "}
+                <span className="font-normal">
+                  {cart.reduce((acc, item) => acc + item.quantity, 0)}
+                </span>
+              </p>
+              <p className="text-slate-700 text-xl font-[600] mb-5">
+                Total Amount:{" "}
+                <span className="font-bold ml-2 text-black">₹{totalAmountInINR}</span>
+              </p>
+              <button
+                className="text-lg w-full py-2.5 rounded-lg font-bold text-white bg-[#15803d]
+          border-2 border-[#15803d] hover:bg-white hover:text-[#15803d] transition-all duration-300 ease-in"
+              >
+                CheckOut Now
+              </button>
+            </div>
+          </div>
         </div>
-
-      
-
-      </div>
-
-
-    </div>) : 
-    (<div className="w-screen h-[calc(100vh-80px)] flex flex-col gap-6 justify-center items-center">
-      <h1 className="font-[600] text-xl">Your Cart is Empty !</h1>
-      <Link to={"/"}>
-        <button className="bg-[#16a34a] text-white text-md uppercase font-[600] py-3 px-10 rounded-md
-        border-[#16a34a] border-2 hover:bg-white hover:text-[#16a34a] ease-in transition-all duration-300">
-          Shop Now
-        </button>
-      </Link>
-    </div>)
-  }
+      ) : (
+        <div className="w-screen h-[calc(100vh-80px)] flex flex-col gap-6 justify-center items-center">
+          <h1 className="font-[600] text-xl">Your Cart is Empty!</h1>
+          <Link to={"/"}>
+            <button
+              className="bg-[#16a34a] text-white text-md uppercase font-[600] py-3 px-10 rounded-md
+        border-[#16a34a] border-2 hover:bg-white hover:text-[#16a34a] ease-in transition-all duration-300"
+            >
+              Shop Now
+            </button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

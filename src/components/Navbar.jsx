@@ -94,7 +94,7 @@ export const Navbar = () => {
                     <span
                     className="absolute -top-1 -right-2 bg-green-600 text-xs w-5 h-5 flex 
                     justify-center items-center animate-bounce rounded-full text-white" 
-                    >{cart.length}</span>
+                    >{cart.reduce((acc, item) => acc + item.quantity, 0)}</span>
                   }
                     <FaShoppingCart  aria-hidden="true" className="size-6" />
                   </button>
