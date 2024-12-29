@@ -21,9 +21,9 @@ const App = () => {
   const showFooter = !noFooterPaths.includes(location.pathname);
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <div className="pt-16">
+      <div className="flex-grow pt-16">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />

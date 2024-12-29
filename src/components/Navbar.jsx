@@ -6,8 +6,8 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
+  name: 'Rutuja',
+  email: 'rutujag44@gmail.com',
   imageUrl:
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
@@ -40,7 +40,7 @@ export const Navbar = () => {
         <Disclosure as="nav" className="bg-gray-800  fixed top-0 w-full z-50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
-              <div className="flex items-center">
+              <div className="flex items-center h-16">
                 <div className="shrink-0">
                 <NavLink to="/">
           <div className="text-slate-100 text-xl flex justify-between items-center gap-2">
@@ -66,23 +66,12 @@ export const Navbar = () => {
                       </a>
                     ))}
                   </div>
+                  
                 </div>
               </div>
               <div className="hidden md:block">
+             
                 <div className="ml-4 flex space-x-4 items-center md:ml-6">
-                {/* <NavLink to="/cart">
-              <div className="relative">
-                  <FaShoppingCart  aria-hidden="true" className="size-6" />
-                  {
-                    cart.length > 0 &&
-                    <span
-                    className="absolute -top-1 -right-2 bg-green-600 text-xs w-5 h-5 flex 
-                    justify-center items-center animate-bounce rounded-full text-white" 
-                    >{cart.length}</span>
-                  }
-                  
-              </div>
-            </NavLink> */}
             <NavLink to="/cart">
             <button
                     type="button"
@@ -136,12 +125,48 @@ export const Navbar = () => {
                   </Menu>
                 </div>
               </div>
-              <div className="-mr-2 flex md:hidden">
+              {/* <div className="-mr-2 flex md:hidden">
+                <NavLink to="/cart">
+            <button
+                    type="button"
+                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  >
+                    <span className="absolute -inset-1.5" />
+                    {
+                    cart.length > 0 &&
+                    <span
+                    className="absolute -top-1 -right-2 bg-green-600 text-xs w-5 h-5 flex 
+                    justify-center items-center animate-bounce rounded-full text-white" 
+                    >{cart.reduce((acc, item) => acc + item.quantity, 0)}</span>
+                  }
+                    <FaShoppingCart  aria-hidden="true" className="size-6" />
+                  </button>
+            </NavLink>
+                </div> */}
+              <div className="-mr-2 flex  items-center justify-center md:hidden">
                 {/* Mobile menu button */}
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                <NavLink to="/cart">
+            <button
+                    type="button"
+                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  >
+                    <span className="absolute -inset-1.5" />
+                    {
+                    cart.length > 0 &&
+                    <span
+                    className="absolute -top-1 -right-2 bg-green-600 text-xs w-5 h-5 flex 
+                    justify-center items-center animate-bounce rounded-full text-white" 
+                    >{cart.reduce((acc, item) => acc + item.quantity, 0)}</span>
+                  }
+                    <FaShoppingCart  aria-hidden="true" className="size-6" />
+                  </button>
+            </NavLink>
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ml-4">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
-                  <Bars3Icon aria-hidden="true" className="block size-6 group-data-[open]:hidden" />
+                  {/* <div aria-hidden="true" className="block size-6 group-data-[open]:hidden" /> */}
+                  <img aria-hidden="true" src={user.imageUrl} alt=""  className="block size-6 group-data-[open]:hidden size-8 rounded-full"/>
+                  {/* <div/> */}
                   <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-[open]:block" />
                 </DisclosureButton>
               </div>
@@ -195,7 +220,9 @@ export const Navbar = () => {
                   </DisclosureButton>
                 ))}
               </div>
+              
             </div>
+            
           </DisclosurePanel>
         </Disclosure>
 
