@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { Spinner } from "../components/Spinner";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { add } from "../redux/Slices/CartSlice";
+import { add } from "../redux/Slices/cartSlice";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for React Router v6
 import StarRating from "./global/utility/StarRating";
 import axios from 'axios';

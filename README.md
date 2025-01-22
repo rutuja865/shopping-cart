@@ -10,3 +10,6 @@ https://tailwindui.com/components/application-ui/application-shells/stacked
 2.better reference but didnt use for dashboard nav
 https://tailwindui.com/components/ecommerce/components/store-navigation
 
+
+notes
+
