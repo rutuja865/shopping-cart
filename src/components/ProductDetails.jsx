@@ -4,76 +4,35 @@ import { Spinner } from "../components/Spinner";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../redux/Slices/cartSlice";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for React Router v6
+import { useNavigate } from "react-router-dom";
 import StarRating from "./global/utility/StarRating";
-import axios from 'axios';
+import { fetchProduct, selectProductById } from "../redux/Slices/productSlice"; // Import new redux functions
+
 export const ProductDetails = () => {
   const { id } = useParams(); // Get the product ID from the URL
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1); // Default quantity to 1
   const [addedToCart, setAddedToCart] = useState(false); // Track if product is added to cart
 
   const dispatch = useDispatch();
-  const { cart } = useSelector((state) => state);
   const navigate = useNavigate(); // useNavigate for React Router v6
-console.log("cart",cart);
-  const API_URL = `https://fakestoreapi.com/products/${id}`;
 
-  // Fetch product details
-  // useEffect(() => {
-  //   async function fetchProductDetails() {
-  //     setLoading(true);
-  //     try {
-  //       const res = await fetch(API_URL);
-  //       const data = await res.json();
-  //       setProduct(data);
-  //     } catch (error) {
-  //       console.log("Error fetching product details:", error);
-  //       setProduct(null);
-  //     }
-  //     setLoading(false);
-  //   }
+  // Fetch product from redux store, ensure safe access if product doesn't exist
+  const product = useSelector((state) => selectProductById(state, id));
+  const loading = useSelector((state) => state.productsdata?.loading); // Use optional chaining to avoid undefined error
 
-  //   fetchProductDetails();
-  // }, [id]);
+  // Fetch product details on component mount
   useEffect(() => {
-    async function fetchProductDetails() {
-      setLoading(true);
-      try {
-        const res = await axios.get(API_URL);
-      
-        setProduct(res.data);
-      } catch (error) {
-        console.log("Error fetching product details:", error);
-        setProduct(null);
-      }
-      setLoading(false);
+    if (!product) {
+      dispatch(fetchProduct(id)); // Dispatch the fetchProduct action if the product isn't in the store
     }
+  }, [dispatch, id, product]);
 
-    fetchProductDetails();
-  }, [id]);
   const addToCart = () => {
-    // Create a new product object with the specified quantity
     const productWithQuantity = { ...product, quantity };
-  
-    // Add the product with its quantity to the cart
     dispatch(add(productWithQuantity));
-    console.log("Added to cart:", productWithQuantity);
     toast.success(`${quantity} item(s) added to Cart`);
     setAddedToCart(true);
   };
-  
-  // const addToCart = () => {
-  //   const productWithQuantity = { ...product, quantity };
-  //   console.log("productWithQuantity",productWithQuantity);
-  //   // Add the product along with its quantity to the cart
-  //   for (let i = 0; i < quantity; i++) {
-  //     dispatch(add(productWithQuantity));
-  //   }
-  //   toast.success(`${quantity} item(s) added to Cart`);
-  //   setAddedToCart(true);
-  // };
 
   if (loading) {
     return <Spinner />;
@@ -91,7 +50,6 @@ console.log("cart",cart);
   }
 
   const USD_TO_INR = 82; // Conversion rate (example value)
-
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -119,7 +77,6 @@ console.log("cart",cart);
             {/* Rating */}
             <div className="mt-4">
               <p className="text-yellow-500 font-semibold text-lg">
-                {/* {renderStars(product.rating.rate)} Display stars */}
                 <StarRating rating={product.rating.rate}/>
               </p>
               <p className="text-gray-600 text-sm">
