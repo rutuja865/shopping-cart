@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
 import Cart from './pages/Cart';  // No curly braces
@@ -9,6 +9,7 @@ import { ForgotPassword } from './components/dashboard/profile/ForgotPassword';
 import { BannerCorousal } from './pages/BannerCorousal';
 import { ProductDetails } from './components/ProductDetails';
 import Footer from './components/Footer'; // Import Footer
+import { NotFound } from './pages/NotFound';
 
 const App = () => {
   const location = useLocation(); // Get current location
@@ -26,11 +27,13 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/notfound" element={<NotFound />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/bannerCarousal" element={<BannerCorousal />} />
+          <Route path="*" element={<Navigate to="/notfound" />} />
         </Routes>
       </div>
       {showFooter && <Footer />} {/* Conditionally render Footer */}
