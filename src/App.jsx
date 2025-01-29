@@ -32,7 +32,6 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
-          <Route path="/bannerCarousal" element={<BannerCorousal />} />
           <Route path="*" element={<Navigate to="/notfound" />} />
         </Routes>
       </div>
