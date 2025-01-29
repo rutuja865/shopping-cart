@@ -1,9 +1,11 @@
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { remove, updateQuantity } from "../redux/Slices/cartSlice";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const USD_TO_INR = 82; // Conversion rate (example value)
 
   const removeFromCart = () => {
@@ -24,22 +26,25 @@ const CartItem = ({ item }) => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center w-full sm:max-w-2xl mt-6 p-4 gap-4 sm:gap-8 bg-white rounded-lg shadow-md">
+    <div
+      className="flex flex-col sm:flex-row sm:items-center w-full sm:max-w-2xl mt-6 p-4 gap-4 sm:gap-8 bg-white rounded-lg shadow-md cursor-pointer hover:shadow-lg transition overflow-hidden"
+      onClick={() => navigate(`/product/${item.id}`)}
+    >
       {/* Product Image */}
       <div className="flex-shrink-0 w-full sm:w-32">
         <img
           src={item.image}
-          className="h-32 w-full object-contain"
+          className="h-32 w-full object-contain rounded-md"
           alt={item.title}
         />
       </div>
 
       {/* Product Details */}
-      <div className="flex flex-col flex-grow">
-        <h1 className="text-gray-700 font-semibold text-lg truncate">
+      <div className="flex flex-col flex-grow min-w-0">
+        <h1 className="text-gray-700 font-semibold text-lg truncate w-full">
           {item.title}
         </h1>
-        <p className="text-gray-500 text-sm mt-1 line-clamp-2">
+        <p className="text-gray-500 text-sm mt-1 line-clamp-2 overflow-hidden">
           {item.description.split(" ").slice(0, 10).join(" ") + "..."}
         </p>
 
@@ -49,7 +54,7 @@ const CartItem = ({ item }) => {
             ₹{(item.price * USD_TO_INR).toLocaleString("en-IN")}
           </p>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
             <button
               className="px-3 py-1 bg-gray-200 rounded-full text-lg font-semibold"
               onClick={decrementQuantity}

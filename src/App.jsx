@@ -10,6 +10,7 @@ import { BannerCorousal } from './pages/BannerCorousal';
 import { ProductDetails } from './components/ProductDetails';
 import Footer from './components/Footer'; // Import Footer
 import { NotFound } from './pages/NotFound';
+import CategoryPage from './pages/CategoryPage';
 
 const App = () => {
   const location = useLocation(); // Get current location
@@ -27,6 +28,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/category/:categoryName" element={<CategoryPage />} />
           <Route path="/notfound" element={<NotFound />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
